@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微风之翼·数字肖像 | 原创数字角色肖像授权服务</title>
+    <meta name="description" content="微风之翼(BreezeWings)专注原创数字角色肖像授权服务，为广告、影视、游戏等行业提供即选即用的数字演员解决方案，法律合规，让创作零风险。">
+    <meta name="keywords" content="数字肖像,数字演员,角色授权,原创数字角色,微风之翼">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* CSS variables and reset */
+        :root {
+            --bg: #FFFFFF;
+            --bg-alt: #FAFAFA;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --accent-cyan: #00F5FF;
+            --accent-purple: #7B3FF2;
+            --accent-pink: #FF2A85;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border-light: rgba(0, 0, 0, 0.05);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            --bg-main: var(--bg);
+            --accent-1: var(--accent-cyan);
+            --accent-2: var(--accent-purple);
+            --text-title: var(--text-main);
+            --font-main: var(--font-sans);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Subtle colorful light blobs */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        body::before {
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+        }
+        body::after {
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        
+        /* Typography */
+        h1, h2, h3 { color: var(--text-title); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        h1 { 
+            font-size: clamp(48px, 8vw, 96px); 
+            margin-bottom: 24px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 1.5rem; }
+        h3 { font-size: clamp(20px, 3vw, 28px); }
+        .section-title { margin-bottom: 1rem; }
+        .section-subtitle { color: var(--text-muted); font-size: 20px; margin-bottom: 4rem; max-width: 600px; }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        section { padding: 120px 0; position: relative; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 32px; border-radius: 100px; font-weight: 600; font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: none;
+        }
+        .btn-primary {
+            background: var(--text-main); color: var(--bg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            background: #000;
+        }
+        .btn-outline {
+            background: transparent; border: 1px solid var(--border-light); color: var(--text-main);
+            backdrop-filter: blur(10px);
+        }
+        .btn-outline:hover {
+            border-color: var(--text-main); transform: translateY(-4px);
+        }
+
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center; height: 80px;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 50%;
+        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text-main); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--text-main); cursor: pointer; }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: flex-start;
+            padding-top: 80px;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .badge {
+            color: var(--accent-purple);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(123, 63, 242, 0.05);
+            border-radius: 100px;
+        }
+        .hero p { font-size: 22px; color: var(--text-muted); max-width: 600px; line-height: 1.6; margin: 0 0 48px; }
+        .hero-btns { display: flex; gap: 16px; }
+
+        /* Glassmorphism Card (Bento) */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Advantages (Bento Grid) */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .bento-item { text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
+        .bento-item:first-child { grid-column: span 2; grid-row: span 2; padding: 64px; background: var(--bg-alt); }
+        .bento-icon { color: var(--text-main); margin-bottom: 32px; display: inline-block; }
+        .bento-number { font-size: 48px; font-weight: 800; color: var(--text-main); margin-bottom: 16px; letter-spacing: -1px; }
+        .bento-item h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .bento-item p { font-size: 15px !important; color: var(--text-muted) !important; line-height: 1.6; margin-top: 0 !important; }
+
+        /* Featured Characters */
+        .character-grid {
+            display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-bottom: 64px;
+        }
+        .character-card {
+            background: var(--bg-alt); border-radius: 16px; overflow: hidden; position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .character-card:nth-child(1) { grid-column: span 8; }
+        .character-card:nth-child(2) { grid-column: span 4; }
+        .character-card:nth-child(3) { grid-column: span 4; }
+        .character-card:nth-child(4) { grid-column: span 8; }
+        .character-card:nth-child(5) { grid-column: span 6; }
+        .character-card:nth-child(6) { grid-column: span 6; }
+        
+        .character-card:hover {
+            transform: scale(0.98);
+        }
+        .char-img {
+            width: 100%; height: 100%; min-height: 300px; background: transparent;
+            display: flex; align-items: center; justify-content: center; color: var(--text-muted);
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .char-info {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 32px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+        }
+        .char-info h3 { font-size: 24px; font-weight: 700; color: var(--text-main); margin: 0; }
+        .char-tag { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 0; margin-bottom: 8px; display: block; }
+        .featured-footer { text-align: center; }
+        .featured-footer p { margin-bottom: 24px; color: var(--text-muted); font-size: 18px; }
+
+        /* Use Cases */
+        .cases-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+        }
+        .case-card { display: flex; align-items: flex-start; gap: 24px; padding: 40px; background: var(--bg-alt); border: none; }
+        .case-icon { color: var(--text-main); flex-shrink: 0; }
+        .case-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .case-card p { font-size: 15px !important; color: var(--text-muted) !important; line-height: 1.6; margin-top: 0 !important; }
+
+        /* About Us - Editorial Style */
+        .about-content {
+            max-width: 800px; margin: 0 auto; text-align: center;
+        }
+        .about-quote {
+            font-size: clamp(24px, 4vw, 40px);
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            letter-spacing: -0.02em;
+        }
+        .about-text p { margin-bottom: 24px; font-size: 18px; color: var(--text-muted); line-height: 1.8; }
+
+        /* Contact Form */
+        .contact-wrapper { max-width: 600px; margin: 0 auto; background: var(--bg-alt); border: none; }
+        .form-group { margin-bottom: 24px; }
+        .form-control {
+            width: 100%; padding: 16px 20px; background: var(--bg);
+            border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-main);
+            font-family: inherit; font-size: 15px; transition: all 0.3s;
+        }
+        .form-control:focus { outline: none; border-color: var(--text-main); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .form-control::placeholder { color: #9CA3AF; }
+        textarea.form-control { height: 160px; resize: vertical; }
+        
+        /* Footer */
+        footer {
+            background: var(--bg); padding: 0; border-top: 1px solid var(--border-light);
+        }
+        .footer-strip {
+            height: 80px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between;
+            font-size: 13px; color: var(--text-muted); max-width: 1200px; margin: 0 auto;
+        }
+        .contact-pill { display: flex; gap: 32px; }
+        .contact-item span { color: var(--text-main); font-weight: 600; margin-right: 8px; }
+
+        /* Animations */
+        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 40px; right: 40px; background: var(--text-main); color: var(--bg);
+            padding: 16px 32px; border-radius: 100px; font-weight: 600; z-index: 2000;
+            transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 1023px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .bento-item:first-child { grid-column: span 2; grid-row: span 1; padding: 40px; }
+            .character-card:nth-child(n) { grid-column: span 6; }
+        }
+        @media (max-width: 767px) {
+            .nav-links {
+                position: fixed; top: 80px; left: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+                flex-direction: column; padding: 32px; gap: 24px; text-align: center;
+                transform: translateY(-100%); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                border-bottom: 1px solid var(--border-light);
+            }
+            .nav-links.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+            .nav-container .btn-primary { display: none; }
+            .menu-toggle { display: block; }
+            
+            .hero-btns { flex-direction: column; }
+            .bento-grid, .character-grid, .cases-grid { grid-template-columns: 1fr; }
+            .bento-item:first-child { grid-column: span 1; }
+            .character-card:nth-child(n) { grid-column: span 12; }
+            #contact [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+            .footer-strip { flex-direction: column; height: auto; padding: 32px 20px; gap: 24px; text-align: center; }
+            .contact-pill { flex-direction: column; gap: 16px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                微风之翼·数字肖像
+            </div>
+            <nav class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#advantages">版权优势</a>
+                <a href="#featured">精选展示</a>
+                <a href="#cases">应用场景</a>
+                <a href="#about">关于我们</a>
+                <a href="#contact">联系我们</a>
+            </nav>
+            <a href="#contact" class="btn btn-primary">咨询授权</a>
+            <button class="menu-toggle"><i data-lucide="menu"></i></button>
+        </div>
+    </header>
+
+    <section id="home" class="hero container">
+        <div class="hero-content fade-up">
+            <span class="badge">BREEZEWINGS DIGITAL PORTRAIT</span>
+            <h1>数字演员<br><span class="gradient-text">即选即用</span></h1>
+            <p>原创数字角色肖像授权，法律合规。为广告制作、品牌宣传及影视项目提供高效、零风险的数字化演员解决方案。</p>
+            <div class="hero-btns">
+                <a href="#featured" class="btn btn-primary">浏览精选</a>
+                <a href="#contact" class="btn btn-outline">咨询授权</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="advantages" class="container">
+        <h2 class="section-title fade-up">为什么选择微风之翼</h2>
+        <div class="bento-grid">
+            <div class="bento-item glass-card fade-up">
+                <i data-lucide="shield-check" class="bento-icon" width="48" height="48"></i>
+                <div class="bento-number"><span class="counter" data-target="100">0</span>%</div>
+                <h3>100%原创，版权清晰</h3>
+                <p style="margin-top: 12px; color: var(--text-muted);">所有数字角色均为原创设计，灰模起稿，独立创作，版权归属清晰无争议</p>
+            </div>
+            <div class="bento-item glass-card fade-up" style="transition-delay: 100ms;">
+                <i data-lucide="scale" class="bento-icon" width="40" height="40"></i>
+                <div class="bento-number"><span class="counter" data-target="0">10</span>风险</div>
+                <h3>法律合规保障</h3>
+                <p style="margin-top: 12px; color: var(--text-muted);">规范授权合同，全链路法律合规，让您的每一次使用都无后顾之忧</p>
+            </div>
+            <div class="bento-item glass-card fade-up" style="transition-delay: 200ms;">
+                <i data-lucide="clock" class="bento-icon" width="40" height="40"></i>
+                <div class="bento-number"><span class="counter" data-target="24">0</span>小时</div>
+                <h3>即选即用，高效交付</h3>
+                <p style="margin-top: 12px; color: var(--text-muted);">标准化授权流程，最快24小时内完成签约，立即投入项目使用</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured" class="container" style="padding-top: 160px;">
+        <h2 class="section-title fade-up">精选数字角色</h2>
+        <p class="section-subtitle fade-up">每一个角色，独立原创，灰模起稿，精细刻画</p>
+        
+        <div class="character-grid">
+            <!-- Card 1 - 小女孩 -->
+            <div class="character-card fade-up">
+                <div class="char-img" style="background: url('images/BW-01.jpg') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-01 晨曦</h3>
+                    <span class="char-tag">童真可爱</span>
+                </div>
+            </div>
+            <!-- Card 2 - 小男孩 -->
+            <div class="character-card fade-up" style="transition-delay: 100ms;">
+                <div class="char-img" style="background: url('images/BW-02.jpg') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-02 凛冬</h3>
+                    <span class="char-tag">阳光少年</span>
+                </div>
+            </div>
+            <!-- Card 3 - 金发女性 -->
+            <div class="character-card fade-up" style="transition-delay: 200ms;">
+                <div class="char-img" style="background: url('images/BW-03.jpg') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-03 繁星</h3>
+                    <span class="char-tag">自然真实</span>
+                </div>
+            </div>
+            <!-- Card 4 - 运动男性 -->
+            <div class="character-card fade-up">
+                <div class="char-img" style="background: url('images/BW-04.png') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-04 苍穹</h3>
+                    <span class="char-tag">运动健将</span>
+                </div>
+            </div>
+            <!-- Card 5 - 短发女性 -->
+            <div class="character-card fade-up" style="transition-delay: 100ms;">
+                <div class="char-img" style="background: url('images/BW-05.png') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-05 幻夜</h3>
+                    <span class="char-tag">时尚前卫</span>
+                </div>
+            </div>
+            <!-- Card 6 - 红发女性 -->
+            <div class="character-card fade-up" style="transition-delay: 200ms;">
+                <div class="char-img" style="background: url('images/BW-06.jpg') center/cover;"></div>
+                <div class="char-info">
+                    <h3>BW-06 极光</h3>
+                    <span class="char-tag">职场精英</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="featured-footer fade-up">
+            <p>查看更多角色，请联系我们的经纪人</p>
+            <a href="#contact" class="btn btn-primary">咨询授权</a>
+        </div>
+    </section>
+
+    <section id="cases" class="container">
+        <h2 class="section-title fade-up">适用场景</h2>
+        <div class="cases-grid">
+            <div class="case-card glass-card fade-up">
+                <i data-lucide="tv" class="case-icon" width="32" height="32"></i>
+                <div>
+                    <h3>广告TVC</h3>
+                    <p style="margin-top: 8px; color: var(--text-muted);">品牌电视广告、短视频广告中的数字演员出演</p>
+                </div>
+            </div>
+            <div class="case-card glass-card fade-up" style="transition-delay: 100ms;">
+                <i data-lucide="video" class="case-icon" width="32" height="32"></i>
+                <div>
+                    <h3>品牌宣传片</h3>
+                    <p style="margin-top: 8px; color: var(--text-muted);">企业形象片、产品宣传片的数字角色代言</p>
+                </div>
+            </div>
+            <div class="case-card glass-card fade-up">
+                <i data-lucide="gamepad-2" class="case-icon" width="32" height="32"></i>
+                <div>
+                    <h3>游戏NPC</h3>
+                    <p style="margin-top: 8px; color: var(--text-muted);">游戏过场动画中的高质量数字角色</p>
+                </div>
+            </div>
+            <div class="case-card glass-card fade-up" style="transition-delay: 100ms;">
+                <i data-lucide="smartphone" class="case-icon" width="32" height="32"></i>
+                <div>
+                    <h3>社交媒体</h3>
+                    <p style="margin-top: 8px; color: var(--text-muted);">品牌社交账号的虚拟形象、内容营销素材</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="about-content">
+            <div class="about-quote fade-up">
+                “专注原创数字角色肖像授权服务，让创作者专注于内容本身，无需担忧肖像权风险。”
+            </div>
+            <div class="about-text fade-up" style="transition-delay: 100ms;">
+                <p>微风之翼（BreezeWings）拥有专业创作团队，从灰模雕塑起稿到精细刻画，每一个数字角色都经过独立原创设计和法律合规认证。</p>
+                <p>我们为广告、影视、游戏等行业提供即选即用的数字演员解决方案。</p>
+                <a href="#contact" class="btn btn-outline" style="margin-top: 32px;">联系我们</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <h2 class="section-title fade-up">开启合作</h2>
+        <p class="section-subtitle fade-up">扫码添加商务微信，备注"数字角色合作"，我们的经纪人将为您一对一服务</p>
+        
+        <div style="text-align: center; max-width: 400px; margin: 0 auto;" class="fade-up">
+            <div style="width: 280px; height: 280px; margin: 0 auto 24px; background: #FFFFFF; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-light); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+                <img src="images/二维码.png" alt="商务微信二维码" style="width: 260px; height: 260px; border-radius: 16px; object-fit: contain;">
+            </div>
+            <p style="font-size: 18px; color: var(--text-main); font-weight: 600;">微信扫码 · 添加商务微信</p>
+            <p style="font-size: 15px; color: var(--text-muted); margin-top: 8px;">备注：数字角色合作</p>
+            <p style="font-size: 13px; color: #9CA3AF; margin-top: 4px;">工作日 9:00 - 18:00</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-strip">
+            <div class="contact-pill">
+                <div class="contact-item"><span>Email</span> business@breezewings.com</div>
+                <div class="contact-item"><span>Location</span> 上海 · 徐汇</div>
+            </div>
+            <div>© 2026 微风之翼 BreezeWings. 沪ICP备XXXXXXXX号</div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        // Scroll Animation (Fade Up)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger number counter if it's a bento card
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        if (!counter.classList.contains('counted')) {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 600; // ms
+                            const step = target / (duration / 16);
+                            let current = 0;
+                            
+                            const updateCounter = () => {
+                                current += step;
+                                if (current < target) {
+                                    counter.innerText = Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target;
+                                    counter.classList.add('counted');
+                                }
+                            };
+                            updateCounter();
+                        }
+                    });
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+
