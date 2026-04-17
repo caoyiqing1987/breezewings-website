@@ -73,8 +73,7 @@
             border-bottom: 1px solid var(--border-light);
         }
         .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 0 40px;
-            display: flex; justify-content: space-between; align-items: center; height: 72px;
+            display: flex; justify-content: space-between; align-items: center; height: 80px;
         }
         .logo {
             display: flex; align-items: center; gap: 12px;
@@ -90,13 +89,21 @@
             color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.3s;
         }
         .nav-links a:hover { color: var(--text-main); }
-        .btn-back {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 20px; border-radius: 100px; font-weight: 600; font-size: 14px;
-            border: 1px solid var(--border-light); color: var(--text-main);
-            background: transparent; cursor: pointer; transition: all 0.3s;
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; border-radius: 100px; font-weight: 700; font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: none;
         }
-        .btn-back:hover { border-color: var(--text-main); transform: translateY(-2px); }
+        .btn-primary {
+            background: var(--text-main); color: var(--bg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            background: #000;
+        }
+        .nav-links a:hover { color: var(--text-main); }
 
         /* Page Header */
         .page-header {
@@ -227,18 +234,6 @@
         .footer-cta p {
             font-size: 20px; color: var(--text-muted); margin-bottom: 24px;
         }
-        .btn-primary {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 14px 32px; border-radius: 100px; font-weight: 600; font-size: 15px;
-            background: var(--text-main); color: var(--bg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer; border: none;
-        }
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
 
         /* Responsive */
         @media (max-width: 1023px) {
@@ -256,7 +251,7 @@
 <body>
 
     <header>
-        <div class="nav-container">
+        <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 0 40px;">
             <a href="index.html" class="logo">
                 <div class="logo-icon"></div>
                 微风之翼·数字肖像
@@ -269,9 +264,7 @@
                 <a href="index.html#cases">应用场景</a>
                 <a href="index.html#contact">联系我们</a>
             </div>
-            <a href="index.html#contact" class="btn-back">
-                预约选角
-            </a>
+            <a href="index.html#contact" class="btn btn-primary">预约选角</a>
         </div>
     </header>
 
