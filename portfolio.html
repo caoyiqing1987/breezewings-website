@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字角色库 | 微风之翼·数字肖像</title>
+    <meta name="description" content="微风之翼原创数字角色库，涵盖多种风格与类型，即选即用，版权清晰。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --bg-alt: #FAFAFA;
+            --accent-cyan: #00F5FF;
+            --accent-purple: #7B3FF2;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border-light: rgba(0, 0, 0, 0.05);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        body::before {
+            top: -10%; left: -10%;
+            background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+        }
+        body::after {
+            bottom: -10%; right: -10%;
+            background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+            display: flex; justify-content: space-between; align-items: center; height: 72px;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;
+        }
+        .logo-icon {
+            width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 50%;
+        }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 20px; border-radius: 100px; font-weight: 600; font-size: 14px;
+            border: 1px solid var(--border-light); color: var(--text-main);
+            background: transparent; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-back:hover { border-color: var(--text-main); transform: translateY(-2px); }
+
+        /* Page Header */
+        .page-header {
+            max-width: 1400px; margin: 0 auto;
+            padding: 140px 40px 60px;
+        }
+        .page-header h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 800; letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-header p {
+            font-size: 20px; color: var(--text-muted); max-width: 500px;
+        }
+        .count-badge {
+            display: inline-block; padding: 6px 16px;
+            background: rgba(123, 63, 242, 0.06);
+            border-radius: 100px;
+            font-size: 14px; font-weight: 600; color: var(--accent-purple);
+            margin-bottom: 20px;
+        }
+
+        /* Grid */
+        .portfolio-grid {
+            max-width: 1400px; margin: 0 auto;
+            padding: 20px 40px 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .portfolio-card {
+            background: var(--bg-alt);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        }
+        .card-thumb {
+            width: 100%; aspect-ratio: 3/4;
+            background-size: cover; background-position: center top;
+        }
+        .card-info {
+            padding: 16px 20px;
+        }
+        .card-info h3 {
+            font-size: 16px; font-weight: 700; color: var(--text-main);
+            margin-bottom: 4px;
+        }
+        .card-info span {
+            font-size: 13px; color: var(--text-muted); font-weight: 400;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            max-width: 600px; max-height: 85vh;
+            border-radius: 16px; overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: zoomIn 0.3s ease;
+            background: var(--bg);
+        }
+        .lightbox-content img {
+            width: 100%; height: auto; display: block;
+        }
+        .lightbox-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .lightbox-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .lightbox-content::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .lightbox-close {
+            position: fixed; top: 24px; right: 32px;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; transition: background 0.3s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-nav {
+            position: fixed; top: 50%; transform: translateY(-50%);
+            width: 48px; height: 48px; border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; transition: background 0.3s;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+        .lightbox-prev { left: 24px; }
+        .lightbox-next { right: 24px; }
+        .lightbox-caption {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 500;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            max-width: 1400px; margin: 0 auto;
+            padding: 0 40px 120px;
+            text-align: center;
+        }
+        .footer-cta p {
+            font-size: 20px; color: var(--text-muted); margin-bottom: 24px;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 32px; border-radius: 100px; font-weight: 600; font-size: 15px;
+            background: var(--text-main); color: var(--bg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive */
+        @media (max-width: 1023px) {
+            .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 767px) {
+            .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 20px 20px 60px; }
+            .page-header { padding: 120px 20px 40px; }
+            .nav-container { padding: 0 20px; }
+            .nav-links { display: none; }
+            .footer-cta { padding: 0 20px 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"></div>
+                微风之翼·数字肖像
+            </a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="index.html#advantages">版权优势</a>
+                <a href="portfolio.html" style="color: var(--text-main);">角色库</a>
+                <a href="index.html#cases">应用场景</a>
+                <a href="index.html#contact">联系我们</a>
+            </div>
+            <a href="index.html" class="btn-back">
+                <i data-lucide="arrow-left" width="16" height="16"></i>
+                返回首页
+            </a>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="count-badge">DIGITAL CHARACTER LIBRARY</div>
+        <h1>数字<span class="gradient-text">角色库</span></h1>
+        <p>原创数字角色，灰模起稿，精细刻画。点击卡片查看完整资料。</p>
+    </div>
+
+    <div class="portfolio-grid">
+        <div class="portfolio-card" data-index="0" onclick="openLightbox(0)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/1-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-01 晨曦</h3>
+                <span>沉稳绅士</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="1" onclick="openLightbox(1)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/2-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-02 凛冬</h3>
+                <span>温婉知性</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="2" onclick="openLightbox(2)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/3-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-03 繁星</h3>
+                <span>睿智干练</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="3" onclick="openLightbox(3)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/5-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-05 幻夜</h3>
+                <span>清新灵动</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="4" onclick="openLightbox(4)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/6-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-06 极光</h3>
+                <span>精英气质</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="5" onclick="openLightbox(5)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/7-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-07</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="6" onclick="openLightbox(6)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/8-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-08</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="7" onclick="openLightbox(7)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/9-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-09</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="8" onclick="openLightbox(8)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/10-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-10</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="9" onclick="openLightbox(9)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/11-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-11</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+        <div class="portfolio-card" data-index="10" onclick="openLightbox(10)">
+            <div class="card-thumb" style="background-image: url('images/portfolio/12-thumb.webp');"></div>
+            <div class="card-info">
+                <h3>BW-12</h3>
+                <span>待更新</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-cta">
+        <p>更多角色持续上新中，联系经纪人获取完整资料</p>
+        <a href="index.html#contact" class="btn-primary">咨询授权</a>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">
+            <i data-lucide="x" width="24" height="24"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" onclick="prevImage()">
+            <i data-lucide="chevron-left" width="28" height="28"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" onclick="nextImage()">
+            <i data-lucide="chevron-right" width="28" height="28"></i>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="角色详情">
+        </div>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const characters = [
+            { id: 1, name: 'BW-01 晨曦', tag: '沉稳绅士' },
+            { id: 2, name: 'BW-02 凛冬', tag: '温婉知性' },
+            { id: 3, name: 'BW-03 繁星', tag: '睿智干练' },
+            { id: 5, name: 'BW-05 幻夜', tag: '清新灵动' },
+            { id: 6, name: 'BW-06 极光', tag: '精英气质' },
+            { id: 7, name: 'BW-07', tag: '待更新' },
+            { id: 8, name: 'BW-08', tag: '待更新' },
+            { id: 9, name: 'BW-09', tag: '待更新' },
+            { id: 10, name: 'BW-10', tag: '待更新' },
+            { id: 11, name: 'BW-11', tag: '待更新' },
+            { id: 12, name: 'BW-12', tag: '待更新' },
+        ];
+
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightbox() {
+            const char = characters[currentIndex];
+            document.getElementById('lightbox-img').src = `images/portfolio/${char.id}.webp`;
+            document.getElementById('lightbox-caption').textContent = `${char.name} · ${char.tag}`;
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + characters.length) % characters.length;
+            updateLightbox();
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % characters.length;
+            updateLightbox();
+        }
+
+        // Keyboard nav
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        });
+
+        // Click outside to close
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lightbox')) closeLightbox();
+        });
+    </script>
+</body>
+</html>
